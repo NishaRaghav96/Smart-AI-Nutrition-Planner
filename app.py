@@ -108,8 +108,6 @@ div[data-testid="stAppViewContainer"] > div:first-child {
 </style>
 """, unsafe_allow_html=True)
 
-
-
 # ------------ Lottie Animation ------------
 try:
     lottie_json = load_lottie("healthy.json")
@@ -183,23 +181,37 @@ if submitted:
             with st.container():
                 st.markdown(f"<div class='meal-card'><h3>{meal_name} — {total_cal} kcal, {total_prot} g Protein</h3>", unsafe_allow_html=True)
                 if not meal_df.empty:
-                    st.table(meal_df[['dish', 'calories', 'protein']].rename(columns={
+                    display_df = meal_df[['dish', 'calories', 'protein']].copy()
+                    display_df = display_df.rename(columns={
                         'dish': 'Dish',
                         'calories': 'Calories (kcal)',
                         'protein': 'Protein (g)'
-                    }))
-                else:
-                    st.warning("No dishes found for this meal.")
-                st.markdown("</div>", unsafe_allow_html=True)
+                    })
+
+                    # ✅ Format calories and protein to 2 decimal places
+                    display_df['Calories (kcal)'] = display_df['Calories (kcal)'].apply(lambda x: f"{x:.2f}")
+                    display_df['Protein (g)'] = display_df['Protein (g)'].apply(lambda x: f"{x:.2f}")
+
+                    # ✅ Reset index and add S.No
+                    display_df.reset_index(drop=True, inplace=True)
+                    display_df.index = display_df.index + 1
+                    display_df.index.name = "S.No"
+
+                    # ✅ Show the table with S.No
+                    st.table(display_df)
+
+
+
+
+
+
 
         st.success(f"✅ **Total Daily Intake:** {total_day_cal} kcal, {total_day_prot} g Protein")
 
         # ------------ Try Again Button ------------
-     # ------------ Try Again Button ------------
         st.markdown("---")
         if st.button("🔁 Try Again"):
             for key in ["weight", "age", "gender", "goal", "preference"]:
                 if key in st.session_state:
                     del st.session_state[key]
             st.experimental_rerun()
-
