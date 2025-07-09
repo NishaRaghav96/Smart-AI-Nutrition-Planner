@@ -867,7 +867,7 @@ input, select, textarea {
     padding-top: 2rem;
 }
 .meal-card {
-    background: #fffdf9;
+    background: #ffe0b2;  /* Orange background */
     border-left: 6px solid #ff9800;
     padding: 15px;
     margin-bottom: 16px;
@@ -883,6 +883,8 @@ div[data-testid="stAppViewContainer"] > div:first-child {
 }
 </style>
 """, unsafe_allow_html=True)
+
+
 
 # ------------ Lottie Animation ------------
 try:
