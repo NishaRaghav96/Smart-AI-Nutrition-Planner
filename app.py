@@ -206,7 +206,7 @@ if submitted:
 
 
 
-        st.success(f"✅ **Total Daily Intake:** {total_day_cal} kcal, {total_day_prot} g Protein")
+         st.success(f"✅ **Total Daily Intake:** {total_day_cal:.2f} kcal, {total_day_prot:.2f} g Protein")
 
         # ------------ Try Again Button ------------
         st.markdown("---")
